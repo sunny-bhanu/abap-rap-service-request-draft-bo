@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZSB_RAP_SRVREQ</ARBGB>
+    <MASTERLANG>E</MASTERLANG>
+    <STEXT>RAP demo: Service Request</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZSB_RAP_SRVREQ</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>Required date &amp;1 is in the past</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZSB_RAP_SRVREQ</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Plant &amp;1 does not exist</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZSB_RAP_SRVREQ</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Priority &amp;1 is not valid (allowed: 1 - very high to 4 - low)</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZSB_RAP_SRVREQ</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Item &amp;1: quantity must be greater than zero</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZSB_RAP_SRVREQ</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Service request &amp;1 approved</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZSB_RAP_SRVREQ</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>Service request &amp;1 rejected</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZSB_RAP_SRVREQ</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>Service request &amp;1 completed</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZSB_RAP_SRVREQ</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>Service request &amp;1: status &amp;2 does not allow this action</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZSB_RAP_SRVREQ</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>Could not generate a UUID for the new service request</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,6 @@
+@EndUserText.label: 'Access control for ZSB_C_ServiceRequest'
+@MappingRole: true
+define role ZSB_C_SERVICEREQUEST {
+  grant select on ZSB_C_ServiceRequest
+    where inheriting conditions from entity ZSB_I_ServiceRequest;
+}

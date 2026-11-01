@@ -1,0 +1,11 @@
+@EndUserText.label: 'Service Request - UI service'
+define service ZSB_UI_SERVICEREQUEST {
+  expose ZSB_C_ServiceRequest     as ServiceRequest;
+  expose ZSB_C_ServiceRequestItem as Item;
+  expose ZSB_I_SrvReqStatusVH     as StatusVH;
+  expose ZSB_I_SrvReqPriorityVH   as PriorityVH;
+  expose I_PlantStdVH             as Plant;
+  expose I_ProductStdVH           as Product;
+  expose I_CurrencyStdVH          as Currency;
+  expose I_UnitOfMeasureStdVH     as UnitOfMeasure;
+}

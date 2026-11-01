@@ -1,0 +1,92 @@
+@Metadata.layer: #CUSTOMER
+@UI: {
+  headerInfo: {
+    typeName: 'Service Request',
+    typeNamePlural: 'Service Requests',
+    title: { type: #STANDARD, value: 'RequestId' },
+    description: { type: #STANDARD, value: 'Description' }
+  },
+  presentationVariant: [{
+    sortOrder: [{ by: 'RequestId', direction: #DESC }],
+    visualizations: [{ type: #AS_LINEITEM }]
+  }]
+}
+annotate view ZSB_C_ServiceRequest with
+{
+  @UI.facet: [
+    { id: 'StatusHeader', purpose: #HEADER,   type: #DATAPOINT_REFERENCE,      position: 10, targetQualifier: 'Status' },
+    { id: 'AmountHeader', purpose: #HEADER,   type: #DATAPOINT_REFERENCE,      position: 20, targetQualifier: 'TotalAmount' },
+    { id: 'General',      purpose: #STANDARD, type: #IDENTIFICATION_REFERENCE, position: 10, label: 'General Information' },
+    { id: 'Items',        purpose: #STANDARD, type: #LINEITEM_REFERENCE,       position: 20, label: 'Items', targetElement: '_Item' }
+  ]
+
+  @UI.hidden: true
+  RequestUuid;
+
+  @UI: {
+    lineItem: [
+      { position: 10, importance: #HIGH },
+      { type: #FOR_ACTION, dataAction: 'approve',  label: 'Approve' },
+      { type: #FOR_ACTION, dataAction: 'reject',   label: 'Reject' },
+      { type: #FOR_ACTION, dataAction: 'complete', label: 'Complete' }
+    ],
+    identification: [
+      { position: 10 },
+      { type: #FOR_ACTION, dataAction: 'approve',  label: 'Approve' },
+      { type: #FOR_ACTION, dataAction: 'reject',   label: 'Reject' },
+      { type: #FOR_ACTION, dataAction: 'complete', label: 'Complete' }
+    ],
+    selectionField: [{ position: 10 }]
+  }
+  RequestId;
+
+  @UI: { lineItem: [{ position: 20, importance: #HIGH }], identification: [{ position: 20 }], selectionField: [{ position: 20 }] }
+  Equipment;
+
+  @UI: { lineItem: [{ position: 30 }], identification: [{ position: 30 }], selectionField: [{ position: 30 }] }
+  Plant;
+
+  @UI: { identification: [{ position: 40 }] }
+  Description;
+
+  @UI: { lineItem: [{ position: 50 }], identification: [{ position: 50 }], selectionField: [{ position: 40 }] }
+  Priority;
+
+  @UI: {
+    lineItem: [{ position: 60, criticality: 'StatusCriticality' }],
+    identification: [{ position: 60 }],
+    selectionField: [{ position: 50 }],
+    dataPoint: { qualifier: 'Status', title: 'Status', criticality: 'StatusCriticality' }
+  }
+  Status;
+
+  @UI.hidden: true
+  StatusCriticality;
+
+  @UI: { identification: [{ position: 70 }] }
+  RequestedBy;
+
+  @UI: { lineItem: [{ position: 80 }], identification: [{ position: 80 }] }
+  RequiredDate;
+
+  @UI: {
+    lineItem: [{ position: 90 }],
+    identification: [{ position: 90 }],
+    dataPoint: { qualifier: 'TotalAmount', title: 'Total Amount' }
+  }
+  TotalAmount;
+
+  @UI: { identification: [{ position: 100 }] }
+  CurrencyCode;
+
+  @UI.hidden: true
+  LocalCreatedBy;
+  @UI.hidden: true
+  LocalCreatedAt;
+  @UI.hidden: true
+  LocalLastChangedBy;
+  @UI.hidden: true
+  LocalLastChangedAt;
+  @UI.hidden: true
+  LastChangedAt;
+}

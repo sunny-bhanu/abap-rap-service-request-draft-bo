@@ -1,0 +1,40 @@
+@Metadata.layer: #CUSTOMER
+@UI.headerInfo: {
+  typeName: 'Item',
+  typeNamePlural: 'Items',
+  title: { type: #STANDARD, value: 'Material' },
+  description: { type: #STANDARD, value: 'ItemText' }
+}
+annotate view ZSB_C_ServiceRequestItem with
+{
+  @UI.facet: [
+    { id: 'Item', purpose: #STANDARD, type: #IDENTIFICATION_REFERENCE, position: 10, label: 'Item' }
+  ]
+
+  @UI.hidden: true
+  RequestUuid;
+
+  @UI: { lineItem: [{ position: 10 }], identification: [{ position: 10 }] }
+  ItemNo;
+
+  @UI: { lineItem: [{ position: 20, importance: #HIGH }], identification: [{ position: 20 }] }
+  Material;
+
+  @UI: { lineItem: [{ position: 30 }], identification: [{ position: 30 }] }
+  ItemText;
+
+  @UI: { lineItem: [{ position: 40 }], identification: [{ position: 40 }] }
+  Quantity;
+
+  @UI: { lineItem: [{ position: 50 }], identification: [{ position: 50 }] }
+  Unit;
+
+  @UI: { lineItem: [{ position: 60 }], identification: [{ position: 60 }] }
+  NetAmount;
+
+  @UI: { identification: [{ position: 70 }] }
+  CurrencyCode;
+
+  @UI.hidden: true
+  LocalLastChangedAt;
+}

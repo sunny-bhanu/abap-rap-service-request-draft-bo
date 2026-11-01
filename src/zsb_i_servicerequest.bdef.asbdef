@@ -1,0 +1,105 @@
+managed implementation in class zsb_bp_i_servicerequest unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZSB_I_ServiceRequest alias ServiceRequest
+persistent table zsb_srvreq
+draft table zsb_srvreq_d
+etag master LocalLastChangedAt
+lock master total etag LastChangedAt
+authorization master ( global )
+early numbering
+{
+  field ( readonly )
+    RequestUuid, RequestId, Status, RequestedBy, TotalAmount,
+    LocalCreatedBy, LocalCreatedAt, LocalLastChangedBy, LocalLastChangedAt, LastChangedAt;
+
+  field ( mandatory )
+    Equipment, Plant, Description, Priority, RequiredDate, CurrencyCode;
+
+  create;
+  update ( features : instance );
+  delete ( features : instance );
+
+  association _Item { create ( features : instance ); with draft; }
+
+  // status transitions: New -> Approved | Rejected,  Approved -> Completed
+  action ( features : instance ) approve  result [1] $self;
+  action ( features : instance ) reject   result [1] $self;
+  action ( features : instance ) complete result [1] $self;
+
+  determination setInitialValues on modify { create; }
+  determination setRequestId     on save   { create; }
+
+  validation validateRequiredDate on save { create; field RequiredDate; }
+  validation validatePlant        on save { create; field Plant; }
+  validation validatePriority     on save { create; field Priority; }
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare
+  {
+    validation validateRequiredDate;
+    validation validatePlant;
+    validation validatePriority;
+    validation Item~validateQuantity;
+  }
+
+  mapping for zsb_srvreq
+  {
+    RequestUuid        = request_uuid;
+    RequestId          = request_id;
+    Equipment          = equipment;
+    Plant              = plant;
+    Description        = description;
+    Priority           = priority;
+    Status             = status;
+    RequestedBy        = requested_by;
+    RequiredDate       = required_date;
+    TotalAmount        = total_amount;
+    CurrencyCode       = currency_code;
+    LocalCreatedBy     = local_created_by;
+    LocalCreatedAt     = local_created_at;
+    LocalLastChangedBy = local_last_changed_by;
+    LocalLastChangedAt = local_last_changed_at;
+    LastChangedAt      = last_changed_at;
+  }
+}
+
+define behavior for ZSB_I_ServiceRequestItem alias Item
+persistent table zsb_srvreqitm
+draft table zsb_srvreqitm_d
+etag dependent by _ServiceRequest
+lock dependent by _ServiceRequest
+authorization dependent by _ServiceRequest
+early numbering
+{
+  field ( readonly ) RequestUuid, ItemNo, CurrencyCode, LocalLastChangedAt;
+  field ( mandatory ) Material, Quantity, Unit;
+
+  update;
+  delete;
+
+  association _ServiceRequest { with draft; }
+
+  determination setItemDefaults      on modify { create; }
+  determination calculateTotalAmount on modify { create; field NetAmount; }
+  determination recalcTotalOnDelete  on save   { delete; }
+
+  validation validateQuantity on save { create; field Quantity; }
+
+  mapping for zsb_srvreqitm
+  {
+    RequestUuid        = request_uuid;
+    ItemNo             = item_no;
+    Material           = material;
+    ItemText           = item_text;
+    Quantity           = quantity;
+    Unit               = unit;
+    NetAmount          = net_amount;
+    CurrencyCode       = currency_code;
+    LocalLastChangedAt = local_last_changed_at;
+  }
+}

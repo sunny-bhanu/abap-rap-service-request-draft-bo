@@ -1,0 +1,8 @@
+@EndUserText.label: 'Access control for ZSB_I_ServiceRequest'
+@MappingRole: true
+define role ZSB_I_SERVICEREQUEST {
+  // Users see the service requests of the plants they are authorised for.
+  // Demo uses the standard plant object; a productive BO would use its own.
+  grant select on ZSB_I_ServiceRequest
+    where ( Plant ) = aspect pfcg_auth( M_MATE_WRK, WERKS, ACTVT = '03' );
+}
