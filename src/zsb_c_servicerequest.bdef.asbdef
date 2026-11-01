@@ -29,11 +29,5 @@ use etag
   use update;
   use delete;
 
-  // keep the header total in sync while the user edits items in the draft
-  side effects
-  {
-    field NetAmount affects field _ServiceRequest.TotalAmount;
-  }
-
   use association _ServiceRequest { with draft; }
 }

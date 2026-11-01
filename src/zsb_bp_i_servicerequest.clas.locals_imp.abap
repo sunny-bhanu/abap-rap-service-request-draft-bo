@@ -159,22 +159,23 @@ CLASS lhc_servicerequest IMPLEMENTATION.
         FROM CORRESPONDING #( entities )
       LINK DATA(item_links).
 
-    LOOP AT entities ASSIGNING FIELD-SYMBOL(<entity>).
+    LOOP AT entities INTO DATA(entity).
       DATA(max_item_no) = REDUCE zsb_srvreqitm-item_no(
         INIT max = CONV zsb_srvreqitm-item_no( '0000' )
-        FOR link IN item_links USING KEY entity
-          WHERE ( source-RequestUuid = <entity>-RequestUuid )
+        FOR link IN item_links
+          WHERE ( source-RequestUuid = entity-RequestUuid )
         NEXT max = COND #( WHEN link-target-ItemNo > max THEN link-target-ItemNo ELSE max ) ).
 
-      LOOP AT <entity>-%target ASSIGNING FIELD-SYMBOL(<item>).
-        IF <item>-ItemNo IS INITIAL.
+      LOOP AT entity-%target INTO DATA(item).
+        DATA(item_no) = item-ItemNo.
+        IF item_no IS INITIAL.
           max_item_no += 10.
-          <item>-ItemNo = max_item_no.
+          item_no = max_item_no.
         ENDIF.
-        APPEND VALUE #( %cid             = <item>-%cid
-                        %is_draft        = <item>-%is_draft
-                        %key-RequestUuid = <entity>-RequestUuid
-                        %key-ItemNo      = <item>-ItemNo ) TO mapped-item.
+        APPEND VALUE #( %cid             = item-%cid
+                        %is_draft        = item-%is_draft
+                        %key-RequestUuid = entity-RequestUuid
+                        %key-ItemNo      = item_no ) TO mapped-item.
       ENDLOOP.
     ENDLOOP.
   ENDMETHOD.

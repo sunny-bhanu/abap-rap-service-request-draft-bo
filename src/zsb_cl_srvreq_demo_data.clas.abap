@@ -91,8 +91,8 @@ CLASS zsb_cl_srvreq_demo_data IMPLEMENTATION.
       out->write( |{ lines( mapped-servicerequest ) } sample requests with { lines( mapped-item ) } items created| ).
     ELSE.
       out->write( 'Commit failed:' ).
-      LOOP AT commit_reported-servicerequest INTO message WHERE %msg IS BOUND.
-        out->write( message-%msg->if_message~get_text( ) ).
+      LOOP AT commit_reported-servicerequest INTO DATA(commit_message) WHERE %msg IS BOUND.
+        out->write( commit_message-%msg->if_message~get_text( ) ).
       ENDLOOP.
     ENDIF.
   ENDMETHOD.

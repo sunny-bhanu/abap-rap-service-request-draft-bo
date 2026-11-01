@@ -90,6 +90,12 @@ early numbering
 
   validation validateQuantity on save { create; field Quantity; }
 
+  // keep the header total in sync while the user edits items in the draft
+  side effects
+  {
+    field NetAmount affects field _ServiceRequest.TotalAmount;
+  }
+
   mapping for zsb_srvreqitm
   {
     RequestUuid        = request_uuid;

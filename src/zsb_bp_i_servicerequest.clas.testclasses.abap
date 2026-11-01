@@ -114,9 +114,14 @@ CLASS ltc_service_request IMPLEMENTATION.
       REPORTED DATA(reported).
 
     cl_abap_unit_assert=>assert_not_initial( failed-servicerequest ).
-    cl_abap_unit_assert=>assert_equals(
-      exp = if_abap_behv=>mk-on
-      act = VALUE #( reported-servicerequest[ %msg IS NOT INITIAL ]-%element-RequiredDate OPTIONAL ) ).
+
+    DATA(date_highlighted) = abap_false.
+    LOOP AT reported-servicerequest INTO DATA(message) WHERE %msg IS BOUND.
+      IF message-%element-RequiredDate = if_abap_behv=>mk-on.
+        date_highlighted = abap_true.
+      ENDIF.
+    ENDLOOP.
+    cl_abap_unit_assert=>assert_true( date_highlighted ).
   ENDMETHOD.
 
 
