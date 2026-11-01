@@ -20,7 +20,7 @@ A complete, draft-enabled **RAP business object** built with **ABAP Cloud** rule
 | Actions | `approve`, `reject`, `complete` | Status machine with `features : instance`, `result [1] $self`, success messages |
 | Determinations | `setInitialValues`, `setRequestId`, `setItemDefaults`, `calculateTotalAmount`, `recalcTotalOnDelete` | On-modify defaults, **number range with fallback** on save, header total kept in sync, including after **item deletion** (possible because the parent key is part of the item key) |
 | Validations | `validateRequiredDate`, `validatePlant`, `validatePriority`, `validateQuantity` | `%state_area` reset pattern, `%element` highlighting, plant check against `I_Plant` in one round trip |
-| Side effects | `ZSB_C_ServiceRequest.bdef` | `field NetAmount affects field _ServiceRequest.TotalAmount` |
+| Side effects | `ZSB_I_ServiceRequest.bdef` (used via `use side effects` in the projection) | `field NetAmount affects field _ServiceRequest.TotalAmount` |
 | Authorization | `ZSB_I_ServiceRequest.dcls`, `ZSB_C_ServiceRequest.dcls` | PFCG aspect on the interface view, `inheriting conditions` on the projection |
 | UI | `*.ddlx` | Header data points with criticality, facets, list/identification/selection fields, actions in list and object page |
 | Tests | `zsb_bp_i_servicerequest.clas.testclasses.abap` | ABAP Unit with CDS + Open SQL test doubles, exercising numbering, defaults, validations, actions and totals through EML |
